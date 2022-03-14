@@ -8,6 +8,15 @@
 </head>
 <body>
   
-  <h1>Hello world</h1>
+  <h1>Homepage</h1>
+  <a href="/articles/create">Create new article</a>
+
+  <% articles.forEach( (article) => { %>
+    <div>
+      <h3><%= article.title %> </h3>
+      <%- article.content %> 
+    </div>
+  <% }); %>
+
 </body>
 </html>
