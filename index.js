@@ -1,27 +1,27 @@
 // Load secret mongodb pass
 require('dotenv').config()
 
-// Dependencies
+// Require the libs
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 
 (async () => {
-  // create the app
+  // Create the app
   const app = express()
 
-  // enable POST request
+  // Enable POST request
   app.use(bodyParser.urlencoded({
     extended: true
   }));
 
-  // Install ejs - to show JS variables into the HTML
+  // Configure the view engine to use ejs
   app.set('view engine', 'ejs')
 
   // Connect to mongoDb
   await mongoose.connect(process.env.MONGODB_URL)
 
-  // Connect the routes
+  // Import and load the routes/router into the express framework
   app.use(require('./routes/frontend'))
 
   // Listen on port 3000

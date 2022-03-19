@@ -7,11 +7,11 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <img src="<%= article.thumbnail %>" alt="A thumbnail">
   <h1>Article <%= article._id %></h1>
   <div>
-    <h3><%= article.title %> </h3>
-    <%- article.content %> 
+    <h3><%= article.title %></h3>
+    <p><%= article.content %></p>
   </div>
 
   <a href="/">Go home</a>
