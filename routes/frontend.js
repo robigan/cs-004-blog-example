@@ -1,39 +1,43 @@
 // dependencies 
 const express = require('express')
-const mongoose = require('mongoose')
-
-// Get the models
-const Article = mongoose.model('articles')
-
+const Article = require('../models/Article');
 
 // create the routes
 const router = express.Router()
 
 // create the request
 //list of the articles
-router.get('/', async (req,res) => {
+router.get('/', async (req, res) => {
   // render the list of articles
-  const articles = await Article.find().lean()
-  console.log(articles)
+  const articles = await Article.find({}).lean(true)
+  // console.log(articles)
   res.render('homepage', {
-    articles:articles
+    articles: articles
   })
 })
 
-router.post('/articles/create', async (req,res) => {
+router.post('/articles/create', async (req, res) => {
   // create  a new document on the database
-  await Article.create(req.body)
+  // await Article.create(req.body)
+  const body = req.body;
+  const article = new Article(body)
+  await article.save()
   // console.log(req.body)
-  res.render('new-article', {})
+  res.json(article.toObject());
 })
 
-router.get('/articles/create', (req,res) => {
-  res.render('new-article', {})
+router.get('/articles/create', async (req, res) => {
+  res.render('new-article')
 })
 
-
-router.get('/articles/:id', () => {
+router.get('/articles/:id', async (req, res) => {
+  const article = await Article.findById(req.params.id).lean(true)
+  // console.log(article)
   
+  if (article) res.render('article', {
+    article: article
+  })
+  else res.sendStatus(404)
 })
 
 // export the requests

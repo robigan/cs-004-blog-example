@@ -6,5 +6,6 @@ const articleSchema = new mongoose.Schema({
   thumbnail: String
 })
 
+const Article = mongoose.model('articles', articleSchema)
 
-mongoose.model('articles', articleSchema)
+module.exports = Article;

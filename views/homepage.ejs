@@ -14,7 +14,8 @@
   <% articles.forEach( (article) => { %>
     <div>
       <h3><%= article.title %> </h3>
-      <%- article.content %> 
+      <p><%- article.content %></p>
+      <a href="/articles/<%= article._id %>">Go to article</a>
     </div>
   <% }); %>
 

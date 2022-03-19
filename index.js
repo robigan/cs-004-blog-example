@@ -1,33 +1,29 @@
+// Load secret mongodb pass
+require('dotenv').config()
+
 // Dependencies
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 
+(async () => {
+  // create the app
+  const app = express()
 
-// create the app
-const app =  express()
+  // enable POST request
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
-// enable POST request
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-// Install ejs - to show JS variables into the HTML
-app.set('view engine','ejs')
+  // Install ejs - to show JS variables into the HTML
+  app.set('view engine', 'ejs')
 
-// Connect to mongoDb
-const mongoDbURI = 'mongodb+srv://test:test@cluster0.1vosb.mongodb.net/blogdatabase?retryWrites=true&w=majority'
-mongoose.connect(mongoDbURI)
+  // Connect to mongoDb
+  await mongoose.connect(process.env.MONGODB_URL)
 
+  // Connect the routes
+  app.use(require('./routes/frontend'))
 
-// Connect the Models
-require('./models/Article')
-
-
-// Connect the routes
-app.use(require('./routes/frontend'))
-
-
-const frontendRoutes = require('./routes/frontend')
-
-
-app.listen(3000)
+  // Listen on port 3000
+  app.listen(3000)
+})();
